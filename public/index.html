@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.-->
+  <title>:: Oreo Hospital</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/plugins/aos/aos.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/js/app.js">
+  <link rel="stylesheet" href="/assets1/plugins/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets1/css/authentication.css">
+  <link rel="stylesheet" href="/assets1/css/main.css">
+  <link rel="stylesheet" href="/assets1/css/color_skins.css">
+  <link rel="stylesheet" href="/assets/css/color_skins.css">
+  <link href="/assets1/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+  <link href="/assets1/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets1/plugins/bootstrap-select/css/bootstrap-select.css" />
+  <link rel="stylesheet" href="/assets1/plugins/dropzone/dropzone.css" />
+  <link rel="stylesheet" href="/assets1/css/main.css">
+  <link rel="stylesheet" href="/assets1/css/timeline.css">
+  <!-- <link rel="stylesheet" href="assets1/css/color_skins.css"> -->
+  <link rel="stylesheet" href="/assets1/plugins/fullcalendar/fullcalendar.min.css">
+  <link rel="stylesheet" href="/assets1/css/inbox.css">
+
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> -->
+
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.s
+    -->
+   
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+
+  <script src="/assets/bundles/libscripts.bundle.js"></script>
+  <script src="/asset1/bundles/libscripts.bundle.js"></script>
+  <script src="/assets/js/app.js"></script>
+  <script src="/assets/js/countto.js"></script>
+  <script src="/assets1/bundles/vendorscripts.bundle.js"></script>
+  <script src="/assets1/bundles/morrisscripts.bundle.js"></script>
+  <script src="/assets1/bundles/jvectormap.bundle.js"></script>
+  <script src="/assets1/bundles/knob.bundle.js"></script>
+  <script src="/assets1/bundles/mainscripts.bundle.js"></script>
+  <script src="/assets1/js/pages/index.js"></script>
+  <script src="/assets1/js/pages/charts/jquery-knob.js"></script>
+<script src="/assets1/bundles/fullcalendarscripts.bundle.js"></script>
+<script src="/assets1/js/pages/calendar/calendar.js"></script>
+
+
+  <script src="/assets1/plugins/momentjs/moment.js"></script>
+  <script src="/assets1/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+
+  <script src="/assets1/plugins/dropzone/dropzone.js"></script>
+
+  <script>
+    $(".navbar-toggler").on('click', function () {
+      $("html").toggleClass("nav-open");
+    });
+    //=============================================================================
+    $('.form-control').on("focus", function () {
+      $(this).parent('.input-group').addClass("input-group-focus");
+    }).on("blur", function () {
+      $(this).parent(".input-group").removeClass("input-group-focus");
+    });
+  </script>
+
+  <script>
+    $(".navbar-toggler").on('click', function () {
+      $("html").toggleClass("nav-open");
+    });
+  </script>
+
+
+<!--  
+<script>    $.fn.selectpicker.Constructor.DEFAULTS.iconBase = 'zmdi';
+    $.fn.selectpicker.Constructor.DEFAULTS.tickIcon = 'zmdi-check';</script> -->
+
+<script>
+    $(function () {
+    //Datetimepicker plugin
+    $('.datetimepicker').bootstrapMaterialDatePicker({
+        format: 'dddd DD MMMM YYYY - HH:mm',
+        clearButton: true,
+        weekStart: 1
+    });
+});
+</script>
+
+
+<!-- Jquery Core Js --> 
+<!-- <script src="assets/bundles/libscripts.bundle.js"></script>  -->
+
+
+</body>
+
+</html>
