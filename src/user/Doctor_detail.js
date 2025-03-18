@@ -1,7 +1,33 @@
 import Footer from "./Footer";
 import Layout from "./Layout";
+import { useEffect, useState } from "react";
+// import Sidebar from "./Sidebar";
+import axios from "axios";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function Doctor_detail () {
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const id = queryParams.get("id");
+
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+    if (id) {
+      axios
+        .get(`http://localhost/hospital/admin/update_doctor.php?id=${id}`)
+        .then((response) => {
+          if (response.data) {
+            setData(response.data);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching chair details:", error);
+        });
+    }
+  }, [id]);
     return(
 <div className="wrapper">
   {/* start loading */}
@@ -34,7 +60,10 @@ function Doctor_detail () {
         <div className="row justify-content-between">
           <div className="col-md-4 col-sm-6 p-r-0">
             <div className="box-img box-shadow">
-              <img src="assets/images/doctor-detail.png" alt />
+            <img
+                        src={`http://localhost/hospital/image/${data.image}`}
+                       
+                      />
               <span className="section-line" />
             </div>
             <div className="opening-hours">
@@ -181,7 +210,7 @@ function Doctor_detail () {
               matters to this principle of selection: he rejects pleasures to secure.</p>
           </div>
         </div>
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-4 col-sm-6">
             <div className="team-box text-center">
               <div className="doctor-pic"><img src="assets/images/team-member-01.png" alt="Dr. John" /></div>
@@ -238,7 +267,7 @@ function Doctor_detail () {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
     {/* Our Team */}

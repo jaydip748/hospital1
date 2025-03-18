@@ -1,9 +1,45 @@
+import { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
+import axios from 'axios';
+import { Link } from "react-router-dom";
 
-function All_patient (){
+function All_patient () {
+
+    const [data,setdata]=useState([])
+    useEffect (()=>{
+        axios.post('http://localhost/hospital/admin/patient_select.php')
+  .then(function (response) {
+    // handle success
+    console.log(response);
+    setdata(response.data);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .finally(function () {
+    // always executed
+  });
+    })
+     // Function to handle deletion
+     const handleDelete = (id) => {
+      if (window.confirm("Are you sure you want to delete this item?")) {
+          axios.post('http://localhost/hospital/admin/doctor_delete.php', { id })
+              .then((response) => {
+                  if (response.data.success) {
+                      alert("Item deleted successfully!");
+                      setdata((prevPost) => prevPost.filter((item) => item.id !== id));
+                  } else {
+                      alert("Failed to delete item.");
+                  }
+              })
+              .catch((error) => {
+                  console.log("Error deleting item:", error);
+              });
+      }
+  };
     return(
-
-      <div className="theme-cyan">
+<div className="theme-cyan">
   {/* Page Loader */}
   <div className="page-loader-wrapper">
     <div className="loader">
@@ -83,297 +119,173 @@ function All_patient (){
   <section className="content">
     <div className="block-header">
       <div className="row">
-        <div className="col-lg-7 col-md-5 col-sm-12">
-          <h2>All Patients
-            <small className="text-muted">Welcome to Oreo</small>
+        <div className="col-lg-5 col-md-5 col-sm-12">
+          <h2>All Doctors
+            <small>Welcome to Oreo</small>
           </h2>
-        </div>
-        <div className="col-lg-5 col-md-7 col-sm-12">
-          <button className="btn btn-primary btn-icon btn-round d-none d-md-inline-block float-right m-l-10" type="button">
+        </div>            
+        <div className="col-lg-7 col-md-7 col-sm-12 text-right">
+          <button className="btn btn-white btn-icon btn-round d-none d-md-inline-block float-right m-l-10" type="button">
             <i className="zmdi zmdi-plus" />
           </button>
           <ul className="breadcrumb float-md-right">
             <li className="breadcrumb-item"><a href="/"><i className="zmdi zmdi-home" /> Oreo</a></li>
-            <li className="breadcrumb-item"><a href="javascript:void(0);">Patients</a></li>
-            <li className="breadcrumb-item active">All Patients</li>
+            <li className="breadcrumb-item"><a href="javascript:void(0);">Doctors</a></li>
+            <li className="breadcrumb-item active">All Doctors</li>
           </ul>
         </div>
       </div>
     </div>
     <div className="container-fluid">
       <div className="row clearfix">
-        <div className="col-md-12">
-          <div className="card patients-list">
-            <div className="header">
-              <h2><strong>Patients</strong> List</h2>
-              <ul className="header-dropdown">
-                <li className="dropdown"> <a href="javascript:void(0);" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i className="zmdi zmdi-more" /> </a>
-                  <ul className="dropdown-menu dropdown-menu-right slideUp">
-                    <li><a href="javascript:void(0);">Action</a></li>
-                    <li><a href="javascript:void(0);">Another action</a></li>
-                    <li><a href="javascript:void(0);">Something else</a></li>
-                  </ul>
-                </li>
-                <li className="remove">
-                  <a role="button" className="boxs-close"><i className="zmdi zmdi-close" /></a>
-                </li>
+        <div className="col-lg-12">
+          <div className="card">
+            <div className="body">
+              <ul className="nav nav-tabs padding-0">
+                <li className="nav-item"><a className="nav-link active" data-toggle="tab" href="#Permanent">Permanent</a></li>
+                <li className="nav-item"><a className="nav-link" data-toggle="tab" href="#Consultant">Consultant</a></li>
               </ul>
             </div>
-            <div className="body">
-              {/* Nav tabs */}
-              <ul className="nav nav-tabs padding-0">
-                <li className="nav-item"><a className="nav-link active" data-toggle="tab" href="#All">All</a></li>
-                <li className="nav-item"><a className="nav-link" data-toggle="tab" href="#USA">USA</a></li>
-                <li className="nav-item"><a className="nav-link" data-toggle="tab" href="#India">India</a></li>
-              </ul>
-              {/* Tab panes */}
-              <div className="tab-content m-t-10">
-                <div className="tab-pane table-responsive active" id="All">
-                  <table className="table m-b-0 table-hover">
-                    <thead>
-                      <tr>                                       
-                        <th>Media</th>
-                        <th>Patients ID</th>
-                        <th>Name</th>
-                        <th>Age</th>
-                        <th>Address</th>
-                        <th>Number</th>
-                        <th>Last Visit</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar1.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00598</span></td>
-                        <td>Daniel</td>
-                        <td>32</td>
-                        <td>71 Pilgrim Avenue Chevy Chase, MD 20815</td>
-                        <td>404-447-6013</td>
-                        <td>11 Jan 2018</td>
-                        <td><span className="badge badge-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar2.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00258</span></td>
-                        <td>Alexander</td>
-                        <td>22</td>
-                        <td>123 6th St. Melbourne, FL 32904</td>
-                        <td>404-447-6013</td>
-                        <td>15 Jan 2018</td>
-                        <td><span className="badge badge-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar3.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00369</span></td>
-                        <td>Richard</td>
-                        <td>26</td>
-                        <td>123 6th St. Melbourne, FL 32904</td>
-                        <td>404-447-6013</td>
-                        <td>16 Jan 2018</td>
-                        <td><span className="badge badge-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar4.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00147</span></td>
-                        <td>Samuel</td>
-                        <td>45</td>
-                        <td>71 Pilgrim Avenue Chevy Chase, MD 20815</td>
-                        <td>404-447-6013</td>
-                        <td>17 Jan 2018</td>
-                        <td><span className="badge badge-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar5.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00123</span></td>
-                        <td>Stephen</td>
-                        <td>55</td>
-                        <td>71 Pilgrim Avenue Chevy Chase, MD 20815</td>
-                        <td>404-447-6013</td>
-                        <td>18 Jan 2018</td>
-                        <td><span className="badge badge-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar1.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00456</span></td>
-                        <td>Joseph</td>
-                        <td>27</td>
-                        <td>70 Bowman St. South Windsor, CT 06074</td>
-                        <td>404-447-6013</td>
-                        <td>19 Jan 2018</td>
-                        <td><span className="badge badge-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar2.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00789</span></td>
-                        <td>Cameron</td>
-                        <td>38</td>
-                        <td>123 6th St. Melbourne, FL 32904</td>
-                        <td>404-447-6013</td>
-                        <td>19 Jan 2018</td>
-                        <td><span className="badge badge-warning">Pending</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar3.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00987</span></td>
-                        <td>Alex</td>
-                        <td>39</td>
-                        <td>123 6th St. Melbourne, FL 32904</td>
-                        <td>404-447-6013</td>
-                        <td>20 Jan 2018</td>
-                        <td><span className="badge badge-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar4.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00951</span></td>
-                        <td>James</td>
-                        <td>32</td>
-                        <td>44 Shirley Ave. West Chicago, IL 60185</td>
-                        <td>404-447-6013</td>
-                        <td>22 Jan 2018</td>
-                        <td><span className="badge badge-warning">Pending</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar1.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00953</span></td>
-                        <td>charlie</td>
-                        <td>51</td>
-                        <td>123 6th St. Melbourne, FL 32904</td>
-                        <td>404-447-6013</td>
-                        <td>22 Jan 2018</td>
-                        <td><span className="badge badge-warning">Pending</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar5.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00984</span></td>
-                        <td>William</td>
-                        <td>35</td>
-                        <td>123 6th St. Melbourne, FL 32904</td>
-                        <td>404-447-6013</td>
-                        <td>22 Jan 2018</td>
-                        <td><span className="badge badge-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar2.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00934</span></td>
-                        <td>thomas</td>
-                        <td>26</td>
-                        <td>123 6th St. Melbourne, FL 32904</td>
-                        <td>404-447-6013</td>
-                        <td>29 Jan 2018</td>
-                        <td><span className="badge badge-warning">Pending</span></td>
-                      </tr>
-                    </tbody>
-                  </table>                            
+          </div>
+          <div className="tab-content m-t-10">
+            <div className="tab-pane active" id="Permanent">
+              <div className="row clearfix">
+              {
+                data.map(jay=>
+                       <div className="col-lg-3 col-md-4 col-sm-6">
+                  <div className="card xl-blue member-card doctor">
+                    <div className="body">
+                      <div className="member-thumb">
+                        <img src={`http://localhost/hospital/image/${jay.image}`} className="img-fluid" alt="profile-image" />                               
+                      </div>
+                      <div className="detail">
+                        <h4 className="m-b-0">{jay.fname}</h4>
+                        <p className="text-muted">{jay.lname}</p>
+                        <ul className="social-links list-inline m-t-20">
+                          <li><a title="facebook" href="#"><i className="zmdi zmdi-facebook" /></a></li>
+                          <li><a title="twitter" href="#"><i className="zmdi zmdi-twitter" /></a></li>
+                          <li><a title="instagram" href="#"><i className="zmdi zmdi-instagram" /></a></li>
+                        </ul>
+                        <p className="text-muted">{jay.message}</p> 
+                                             
+                        {/* <a href="profile.html" className="btn btn-default btn-round btn-simple"></a> */}
+                        <Link
+                                to={`/Patient_profile?id=${jay.id}`}
+                                className="btn btn-default btn-round btn-simple"
+                              >
+                              View Profile
+                              </Link>
+                        <td>    
+                        <button onClick={() => handleDelete(jay.id)} className="btn btn-danger">
+                                                        <i className="fa-solid fa-trash-can">Delete</i>
+                                                    </button>
+                                                    </td>
+                                                    <td>
+                                  <Link
+                                    to={`/updateitem1?id=${jay.id}`}
+                                    className="btn btn-warning"
+                                  >
+                                    up
+                                  </Link>
+                                </td>
+                      </div>
+                    </div>
+                  </div>
+                </div> 
+                )
+              }
+              </div> 
+            </div>
+            <div className="tab-pane" id="Consultant">
+              <div className="row clearfix">
+                <div className="col-lg-3 col-md-4 col-sm-6">
+                  <div className="card xl-khaki member-card doctor">
+                    <div className="body">
+                      <div className="member-thumb">
+                        <img src="../assets/images/doctors/member2.png" className="img-fluid" alt="profile-image" />                               
+                      </div>
+                      <div className="detail">
+                        <h4 className="m-b-0">Dr. Amelia</h4>
+                        <p className="text-muted">Gynecologist</p>
+                        <ul className="social-links list-inline m-t-20">
+                          <li><a title="facebook" href="#"><i className="zmdi zmdi-facebook" /></a></li>
+                          <li><a title="twitter" href="#"><i className="zmdi zmdi-twitter" /></a></li>
+                          <li><a title="instagram" href="#"><i className="zmdi zmdi-instagram" /></a></li>
+                        </ul>
+                        <p className="text-muted">795 Folsom Ave, Suite 600 San Francisco, CADGE 94107</p>                           
+                        <a href="profile.html" className="btn btn-default btn-round btn-simple">View Profile</a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="tab-pane table-responsive" id="USA">
-                  <table className="table m-b-0 table-hover">
-                    <thead>
-                      <tr>                                       
-                        <th>Media</th>
-                        <th>Patients ID</th>
-                        <th>Name</th>
-                        <th>Age</th>
-                        <th>Address</th>
-                        <th>Number</th>
-                        <th>Last Visit</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar1.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00598</span></td>
-                        <td>Daniel</td>
-                        <td>32</td>
-                        <td>71 Pilgrim Avenue Chevy Chase, MD 20815</td>
-                        <td>404-447-6013</td>
-                        <td>11 Jan 2018</td>
-                        <td><span className="badge badge-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar2.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00258</span></td>
-                        <td>Alexander</td>
-                        <td>22</td>
-                        <td>123 6th St. Melbourne, FL 32904</td>
-                        <td>404-447-6013</td>
-                        <td>15 Jan 2018</td>
-                        <td><span className="badge badge-success">Approved</span></td>
-                      </tr>                                       
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar1.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00456</span></td>
-                        <td>Joseph</td>
-                        <td>27</td>
-                        <td>70 Bowman St. South Windsor, CT 06074</td>
-                        <td>404-447-6013</td>
-                        <td>19 Jan 2018</td>
-                        <td><span className="badge badge-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar2.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00789</span></td>
-                        <td>Cameron</td>
-                        <td>38</td>
-                        <td>123 6th St. Melbourne, FL 32904</td>
-                        <td>404-447-6013</td>
-                        <td>19 Jan 2018</td>
-                        <td><span className="badge badge-warning">Pending</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar3.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00987</span></td>
-                        <td>Alex</td>
-                        <td>39</td>
-                        <td>123 6th St. Melbourne, FL 32904</td>
-                        <td>404-447-6013</td>
-                        <td>20 Jan 2018</td>
-                        <td><span className="badge badge-success">Approved</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar4.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00951</span></td>
-                        <td>James</td>
-                        <td>32</td>
-                        <td>44 Shirley Ave. West Chicago, IL 60185</td>
-                        <td>404-447-6013</td>
-                        <td>22 Jan 2018</td>
-                        <td><span className="badge badge-warning">Pending</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar1.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00953</span></td>
-                        <td>charlie</td>
-                        <td>51</td>
-                        <td>123 6th St. Melbourne, FL 32904</td>
-                        <td>404-447-6013</td>
-                        <td>22 Jan 2018</td>
-                        <td><span className="badge badge-warning">Pending</span></td>
-                      </tr>
-                      <tr>
-                        <td><span className="list-icon"><img className="patients-img" src="../assets/images/xs/avatar2.jpg" alt /></span></td>
-                        <td><span className="list-name">KU 00934</span></td>
-                        <td>thomas</td>
-                        <td>26</td>
-                        <td>123 6th St. Melbourne, FL 32904</td>
-                        <td>404-447-6013</td>
-                        <td>29 Jan 2018</td>
-                        <td><span className="badge badge-warning">Pending</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <div className="col-lg-3 col-md-4 col-sm-6">
+                  <div className="card xl-blue member-card doctor">
+                    <div className="body">
+                      <div className="member-thumb">
+                        <img src="../assets/images/doctors/member3.png" className="img-fluid" alt="profile-image" />                               
+                      </div>
+                      <div className="detail">
+                        <h4 className="m-b-0">Dr. Jack </h4>
+                        <p className="text-muted">Dentist</p>
+                        <ul className="social-links list-inline m-t-20">
+                          <li><a title="facebook" href="#"><i className="zmdi zmdi-facebook" /></a></li>
+                          <li><a title="twitter" href="#"><i className="zmdi zmdi-twitter" /></a></li>
+                          <li><a title="instagram" href="#"><i className="zmdi zmdi-instagram" /></a></li>
+                        </ul>
+                        <p className="text-muted">795 Folsom Ave, Suite 600 San Francisco, CADGE 94107</p>                           
+                        <a href="profile.html" className="btn btn-default btn-round btn-simple">View Profile</a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
+                <div className="col-lg-3 col-md-4 col-sm-6">
+                  <div className="card xl-pink member-card doctor">
+                    <div className="body">
+                      <div className="member-thumb">
+                        <img src="../assets/images/doctors/member5.png" className="img-fluid" alt="profile-image" />                               
+                      </div>
+                      <div className="detail">
+                        <h4 className="m-b-0">Dr. Joseph </h4>
+                        <p className="text-muted">Audiology</p>
+                        <ul className="social-links list-inline m-t-20">
+                          <li><a title="facebook" href="#"><i className="zmdi zmdi-facebook" /></a></li>
+                          <li><a title="twitter" href="#"><i className="zmdi zmdi-twitter" /></a></li>
+                          <li><a title="instagram" href="#"><i className="zmdi zmdi-instagram" /></a></li>
+                        </ul>
+                        <p className="text-muted">795 Folsom Ave, Suite 600 San Francisco, CADGE 94107</p>                           
+                        <a href="profile.html" className="btn btn-default btn-round btn-simple">View Profile</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-3 col-md-4 col-sm-6">
+                  <div className="card xl-seagreen member-card doctor">
+                    <div className="body">
+                      <div className="member-thumb">
+                        <img src="../assets/images/doctors/member6.png" className="img-fluid" alt="profile-image" />                               
+                      </div>
+                      <div className="detail">
+                        <h4 className="m-b-0">Dr. Charlie </h4>
+                        <p className="text-muted">Physical Therapy</p>
+                        <ul className="social-links list-inline m-t-20">
+                          <li><a title="facebook" href="#"><i className="zmdi zmdi-facebook" /></a></li>
+                          <li><a title="twitter" href="#"><i className="zmdi zmdi-twitter" /></a></li>
+                          <li><a title="instagram" href="#"><i className="zmdi zmdi-instagram" /></a></li>
+                        </ul>
+                        <p className="text-muted">795 Folsom Ave, Suite 600 San Francisco, CADGE 94107</p>                           
+                        <a href="profile.html" className="btn btn-default btn-round btn-simple">View Profile</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> 
             </div>
           </div>
         </div>
-      </div>
+      </div> 
     </div>
   </section>
 </div>
-
-
     );
 }
 export default All_patient;

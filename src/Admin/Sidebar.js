@@ -221,7 +221,7 @@ const Sidebar =()=>{
                                     </li>
                                     <li><a href="javascript:void(0);" className="menu-toggle"><i className="zmdi zmdi-account-o" /><span>Patients</span> </a>
                                         <ul className="ml-menu">
-                                            <li><a href="/Patients">All Patients</a></li>
+                                            <li><a href="/All_patient">All Patients</a></li>
                                             <li><a href="/All_patient2">All_Patients2</a></li>
                                             <li><a href="/Add_patient">Add Patient</a></li>
                                             <li><a href="/patient_profile">Patient Profile</a></li>
@@ -231,6 +231,8 @@ const Sidebar =()=>{
                                     <li><a href="javascript:void(0);" className="menu-toggle"><i className="zmdi zmdi-account-o" /><span>User</span> </a>
                                         <ul className="ml-menu">
                                             <li><a href="/Appointment_user">Appointment_user</a></li>
+                                            <li><a href="/Approved_Appointments">Approved_Appointments</a></li>
+                                            <li><a href="/PendingAppointments">Pending_Appointments</a></li>
                                             <li><a href="/Appointment_contact">Appointment_contact</a></li>
                                          
                                         </ul>
@@ -248,21 +250,22 @@ const Sidebar =()=>{
                                             <li><a href="/Deparment">Add</a></li>
                                             <li><a href="/Add_department">All Departments</a></li>
                                             <li><a href="/All_department2">All_department2</a></li>
-                                            <li><a href="javascript:void(0);">Cardiology</a></li>
-                                            <li><a href="javascript:void(0);">Pulmonology</a></li>
-                                            <li><a href="javascript:void(0);">Gynecology</a></li>
-                                            <li><a href="javascript:void(0);">Neurology</a></li>
-                                            <li><a href="javascript:void(0);">Urology</a></li>
-                                            <li><a href="javascript:void(0);">Gastrology</a></li>
-                                            <li><a href="javascript:void(0);">Pediatrician</a></li>
-                                            <li><a href="javascript:void(0);">Laboratory</a></li>
+                                            <li><a href="/Full_Body_CheckUp">Full_Body_CheckUp</a></li>
+                                            <li><a href="/Cardiology">Cardiology</a></li>
+                                            <li><a href="/Pulmonology">Pulmonology</a></li>
+                                            <li><a href="/Gynecology">Gynecology</a></li>
+                                            <li><a href="/Neurology">Neurology</a></li>
+                                            <li><a href="/Urology">Urology</a></li>
+                                            <li><a href="/Gastrology">Gastrology</a></li>
+                                            <li><a href="/Pediatrician">Pediatrician</a></li>
+                                            <li><a href="/Laboratory">Laboratory</a></li>
                                         </ul>
                                     </li>
                                     <li> <a href="javascript:void(0);" className="menu-toggle"><i className="zmdi zmdi-lock" /><span>Authentication</span> </a>
                                         <ul className="ml-menu">
-                                            <li><a href="sign-in.html">Sign In</a> </li>
-                                            <li><a href="sign-up.html">Sign Up</a> </li>
-                                            <li><a href="forgot-password.html">Forgot Password</a> </li>
+                                            <li><a href="/SingIn">Sign In</a> </li>
+                                            <li><a href="/SingUp">Sign Up</a> </li>
+                                            <li><a href="/Forget">Forgot Password</a> </li>
                                             <li><a href="404.html">Page 404</a> </li>
                                             <li><a href="500.html">Page 500</a> </li>
                                             <li><a href="page-offline.html">Page Offline</a> </li>

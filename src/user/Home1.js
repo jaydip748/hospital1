@@ -1,14 +1,74 @@
-// import { Outlet } from "react-router-dom";
-import { useState } from "react";
+// // import { Outlet } from "react-router-dom";
+// import { useState } from "react";
+// import axios from "axios";
+// import Layout from "./Layout";
+// const Home1 = () => {
+//   const [name, setname] = useState("");
+//   const [phone, setphone] = useState("");
+//   const [date, setdate] = useState("");
+//   const [doctor, setdoctor] = useState("");
+//   const [Department, setdepartment] = useState("");
+
+//   function make(e) {
+//     e.preventDefault();
+//     const blogdata = new FormData();
+//     blogdata.append("name", name);
+//     blogdata.append("phone", phone);
+//     blogdata.append("date", date);
+//     blogdata.append("doctor", doctor);
+//     blogdata.append("department", Department);
+//     blogdata.append("status", "pending"); // Add status field with value "pending"
+
+//     axios
+//       .post("http://localhost/hospital/user/make_appointment.php", blogdata)
+//       .then(function (response) {
+//         // handle success
+//         console.log(response);
+//       })
+//       .catch(function (error) {
+//         // handle error
+//         console.log(error);
+//         alert("make an appointment ");
+//         setname("");
+//         setphone("");
+//         setdate("");
+//         setdoctor("");
+//         setdepartment("");
+//       })
+//       .finally(function () {
+//         // always executed
+//       });
+//   }
+
+
+
+
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Layout from "./Layout";
+
 const Home1 = () => {
   const [name, setname] = useState("");
   const [phone, setphone] = useState("");
   const [date, setdate] = useState("");
   const [doctor, setdoctor] = useState("");
-  const [Department, setdepartment] = useState("");
+  const [department, setdepartment] = useState("");
+  const [data, setdata] = useState([]);
 
+  // Fetch doctors list
+  useEffect(() => {
+    axios
+      .post("http://localhost/hospital/admin/doctor_select.php")
+      .then((response) => {
+        console.log(response);
+        setdata(response.data);
+      })
+      .catch((error) => {
+        console.log("Error fetching doctors:", error);
+      });
+  }, []);
+
+  // Function to make an appointment
   function make(e) {
     e.preventDefault();
     const blogdata = new FormData();
@@ -16,119 +76,48 @@ const Home1 = () => {
     blogdata.append("phone", phone);
     blogdata.append("date", date);
     blogdata.append("doctor", doctor);
-    blogdata.append("department", Department);
-    blogdata.append("status", "pending"); // Add status field with value "pending"
+    blogdata.append("department", department);
+    blogdata.append("status", "pending");
 
     axios
       .post("http://localhost/hospital/user/make_appointment.php", blogdata)
-      .then(function (response) {
-        // handle success
+      .then((response) => {
         console.log(response);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-        alert("make an appointment ");
+        alert("Appointment successfully created!");
         setname("");
         setphone("");
         setdate("");
         setdoctor("");
         setdepartment("");
       })
-      .finally(function () {
-        // always executed
+      .catch((error) => {
+        console.log(error);
+        alert("successfully making appointment.");
       });
   }
+
+  // Function to handle deletion
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this item?")) {
+      axios
+        .post("http://localhost/hospital/admin/doctor_delete.php", { id })
+        .then((response) => {
+          if (response.data.success) {
+            alert("Doctor deleted successfully!");
+            setdata((prevData) => prevData.filter((item) => item.id !== id));
+          } else {
+            alert("Failed to delete doctor.");
+          }
+        })
+        .catch((error) => {
+          console.log("Error deleting doctor:", error);
+        });
+    }
+  };
   return (
     <>
       <div className="wrapper">
-        {/* start loading */}
-        {/* <div className="main_header">
-    <section id="top-nav">
-      <div className="container">
-        <div className="top">
-          <div className="row">
-            <div className="col-lg-6 col-md-7">
-              <div className="left">
-                <ul className="list-unstyled m-b-0">
-                  <li><a href="#" className="btn btn-link"><i className="zmdi zmdi-email m-r-5" />info@example.com</a>
-                    <a href="#" className="btn btn-link"><i className="zmdi zmdi-phone m-r-5" />+
-                      202-555-0191</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="col-lg-6 col-md-5">
-              <div className="text-right d-none d-md-block">
-                <ul className="list-unstyled m-b-0">
-                  <li><a href="/Login" className="btn btn-link">Sign in</a> <a href="/Register" className="btn btn-link">sign
-                      up</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <header id="header">
-      <div className="container">
-        <div className="head">
-          <div className="row">
-            <div className="col-lg-5 col-sm-5">
-              <div className="left">
-                <a href="index.html" className="navbar-brand"><img src="assets/images/logo.svg" alt="logo" /></a>
-              </div>
-            </div>
-            <div className="col-lg-7 col-sm-7">
-              <div className="text-right d-none d-md-block">
-                <p className="col-white m-b-0 p-t-5"><i className="zmdi zmdi-time" /> Mon - Sat: 9:00 - 18:00
-                  Sunday CLOSED </p>
-                <p className="col-white m-b-0"><i className="zmdi zmdi-pin" /> 1422 1st St. Santa Rosa CA
-                  94559. United States </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-    <div id="navbar" data-aos="fade-down">
-      <div className="container">
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <button className="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon" />
-          </button>
-          <div className="collapse navbar-collapse" id="navbarMenu">
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item"><a className="nav-link" href="services.html">Services</a></li>
-              <li className="nav-item"><a className="nav-link" href="departments.html">Departments</a></li>
-              <li className="nav-item"><a className="nav-link" href="doctors.html">Doctors</a></li>
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="javascript:void(0);" id="pageMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog</a>
-                <div className="dropdown-menu">
-                  <a className="dropdown-item" href="blog.html">Blog</a>
-                  <a className="dropdown-item" href="blog-detail.html">Blog Detail</a>
-                </div>
-              </li>
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="javascript:void(0);" id="pageMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
-                <div className="dropdown-menu">
-                  <a className="dropdown-item" href="about.html">About Us</a>
-                  <a className="dropdown-item" href="faq.html">FAQs</a>
-                  <a className="dropdown-item" href="galary.html">Galary</a>
-                  <a className="dropdown-item" href="price-list.html">Price list</a>
-                </div>
-              </li>
-              <li className="nav-item"><a className="nav-link" href="contact.html">Contact Us</a></li>
-              <li className="nav-item d-md-none d-lg-none d-xl-none"><a className="nav-link" href="javascript:void(0);">Sign in</a></li>
-              <li className="nav-item d-md-none d-lg-none d-xl-none"><a className="nav-link" href="javascript:void(0);">Sign up</a></li>
-            </ul>
-            <form className="form-inline my-2 my-lg-0 d-none d-lg-inline-block">
-              <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-            </form>
-          </div>
-        </nav>
-      </div>
-    </div>
-  </div> */}
+
         <Layout />
         {/* start hero */}
         <section id="hero">
@@ -197,8 +186,8 @@ const Home1 = () => {
                       <option value="" disabled>
                         Select Doctor
                       </option>
-                      <option value="marc">Marc Parcival</option>
-                      <option value="alen">Alen Bailey</option>
+                      <option value="Marc Parcival">Marc Parcival</option>
+                      <option value="Alen Bailey ">Alen Bailey</option>
                       <option value="Basil Andrew">Basil Andrew</option>
                       <option value="Giles Franklin">Giles Franklin</option>
                       <option value="Edgar Denzil">Edgar Denzil</option>
@@ -208,7 +197,7 @@ const Home1 = () => {
                   <div className="col-lg-4 col-md-6 col-6">
                     <select
                       className="form-control"
-                      value={Department} // Controlled value for the select input
+                      value={department} // Controlled value for the select input
                       onChange={(e) => setdepartment(e.target.value)} // Update the department state
                     >
                       <option value="" disabled>
@@ -546,22 +535,21 @@ const Home1 = () => {
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-3 col-md-6 col-sm-12">
+                {
+                  data.map(jay=>
+                    <div className="col-lg-3 col-md-6 col-sm-12">
                   <div
                     className="team-box text-center"
                     data-aos="flip-left"
                     data-aos-easing="ease-out-cubic"
-                    data-aos-duration={5000}
-                  >
+                    data-aos-duration={5000} >
                     <div className="doctor-pic">
-                      <img
-                        src="assets/images/team-member-01.png"
-                        alt="Dr. John"
-                      />
+                    <img src={`http://localhost/hospital/image/${jay.image}`} className="img-fluid" alt="profile-image" />                               
+
                     </div>
                     <div className="doctor-info">
                       <h4>
-                        Dr. John <span>Dentist</span>
+                        {jay.fname}<span>{jay.speciality}</span>
                       </h4>
                       <ul className="clearfix">
                         <li>
@@ -589,135 +577,9 @@ const Home1 = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-3 col-md-6 col-sm-12">
-                  <div
-                    className="team-box text-center"
-                    data-aos="flip-left"
-                    data-aos-easing="ease-out-cubic"
-                    data-aos-duration={4000}
-                  >
-                    <div className="doctor-pic">
-                      <img
-                        src="assets/images/team-member-02.png"
-                        alt="Dr. Amelia"
-                      />
-                    </div>
-                    <div className="doctor-info">
-                      <h4>
-                        Dr. Amelia <span>Gynecologist</span>
-                      </h4>
-                      <ul className="clearfix">
-                        <li>
-                          <a href="javascript:void(0);">
-                            <i className="zmdi zmdi-twitter" />
-                          </a>
-                        </li>
-                        <li>
-                          <a href="javascript:void(0);">
-                            <i className="zmdi zmdi-instagram" />
-                          </a>
-                        </li>
-                      </ul>
-                      <a
-                        className="btn btn-simple btn-primary btn-round"
-                        href="javascript:void(0);"
-                      >
-                        View More
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-3 col-md-6 col-sm-12">
-                  <div
-                    className="team-box text-center"
-                    data-aos="flip-left"
-                    data-aos-easing="ease-out-cubic"
-                    data-aos-duration={5000}
-                  >
-                    <div className="doctor-pic">
-                      <img
-                        src="assets/images/team-member-03.png"
-                        alt="Dr. Jack"
-                      />
-                    </div>
-                    <div className="doctor-info">
-                      <h4>
-                        Dr. Jack <span>Audiology</span>
-                      </h4>
-                      <ul className="clearfix">
-                        <li>
-                          <a href="javascript:void(0);">
-                            <i className="zmdi zmdi-facebook" />
-                          </a>
-                        </li>
-                        <li>
-                          <a href="javascript:void(0);">
-                            <i className="zmdi zmdi-twitter" />
-                          </a>
-                        </li>
-                        <li>
-                          <a href="javascript:void(0);">
-                            <i className="zmdi zmdi-instagram" />
-                          </a>
-                        </li>
-                        <li>
-                          <a href="javascript:void(0);">
-                            <i className="zmdi zmdi-google-plus" />
-                          </a>
-                        </li>
-                      </ul>
-                      <a
-                        className="btn btn-simple btn-primary btn-round"
-                        href="javascript:void(0);"
-                      >
-                        View More
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-3 col-md-6 col-sm-12">
-                  <div
-                    className="team-box text-center"
-                    data-aos="flip-left"
-                    data-aos-easing="ease-out-cubic"
-                    data-aos-duration={3000}
-                  >
-                    <div className="doctor-pic">
-                      <img
-                        src="assets/images/team-member-04.png"
-                        alt="Dr. Charlie"
-                      />
-                    </div>
-                    <div className="doctor-info">
-                      <h4>
-                        Dr. Charlie<span>Dentist</span>
-                      </h4>
-                      <ul className="clearfix">
-                        <li>
-                          <a href="javascript:void(0);">
-                            <i className="zmdi zmdi-facebook" />
-                          </a>
-                        </li>
-                        <li>
-                          <a href="javascript:void(0);">
-                            <i className="zmdi zmdi-twitter" />
-                          </a>
-                        </li>
-                        <li>
-                          <a href="javascript:void(0);">
-                            <i className="zmdi zmdi-instagram" />
-                          </a>
-                        </li>
-                      </ul>
-                      <a
-                        className="btn btn-simple btn-primary btn-round"
-                        href="javascript:void(0);"
-                      >
-                        View More
-                      </a>
-                    </div>
-                  </div>
-                </div>
+                  )
+                }
+
               </div>
             </div>
           </div>

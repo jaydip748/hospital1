@@ -46,6 +46,22 @@ import Add_payment_update from './Admin/Add_payment_update';
 import Deparment_update from './Admin/Deparment_update';
 import Appointment_update from './Admin/Appointment_update';
 import Doctor_details from "./Admin/Doctor_details";
+import ApprovedAppointments from "./Admin/ApprovedAppointments";
+import PendingAppointments from "./Admin/PendingAppointments";
+import Cardiology from "./Admin/Cardiology";
+import Pulmonology from "./Admin/Pulmonology";
+import Laboratory from "./Admin/Laboratory";
+import Pediatrician from "./Admin/Pediatrician";
+import Full_Body_CheckUp from "./Admin/Full_Body_CheckUp";
+import Gynecology from "./Admin/Gynecology";
+import Neurology from "./Admin/Neurology";
+import Urology from "./Admin/Urology";
+import Gastrology from "./Admin/Gastrology";
+import SingUp from "./Admin/SingUp";
+import SingIn from "./Admin/SingIn";
+import Forget from "./Admin/Forget";
+
+
 
 
 function App() {
@@ -103,6 +119,21 @@ function App() {
           <Route path="/updateitem3" element={<Deparment_update />} />
           <Route path="/updateitem4" element={<Appointment_update />} />
           <Route path="/Doctor_details" element={<Doctor_details />} />
+          <Route path="/Approved_Appointments" element={<ApprovedAppointments />} />
+          <Route path="/PendingAppointments" element={<PendingAppointments />} />
+          <Route path="/Full_Body_CheckUp" element={<Full_Body_CheckUp />} />
+          <Route path="/Cardiology" element={<Cardiology />} />
+          <Route path="/Pulmonology" element={<Pulmonology />} />
+          <Route path="/Gynecology" element={<Gynecology />} />
+          <Route path="/Neurology" element={<Neurology />} />
+          <Route path="/Urology" element={<Urology />} />
+          <Route path="/Gastrology" element={<Gastrology />} />
+          <Route path="/Pediatrician" element={<Pediatrician />} />
+          <Route path="/Laboratory" element={<Laboratory />} />
+          <Route path="/SingUp" element={<SingUp />} />
+          <Route path="/SingIn" element={<SingIn />} />
+          <Route path="/Forget" element={<Forget />} />
+          <Route path="/Doctor_detail" element={<Doctor_detail />} />
          
        
           

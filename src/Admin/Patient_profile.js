@@ -1,6 +1,33 @@
 import Sidebar from "./Sidebar";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 
 function Patient_profile () {
+
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const id = queryParams.get("id");
+
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+    if (id) {
+      axios
+        .get(`http://localhost/hospital/admin/update_patient.php?id=${id}`)
+        .then((response) => {
+          if (response.data) {
+            setData(response.data);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching chair details:", error);
+        });
+    }
+  }, [id]);
     return(
     <div className="theme-cyan">
   {/* Page Loader */}
@@ -104,11 +131,16 @@ function Patient_profile () {
         <div className="col-lg-4 col-md-12 col-sm-12">
           <div className="card member-card">
             <div className="header l-coral">
-              <h4 className="m-t-10">Eliana Smith</h4>
+              <h4 className="m-t-10">{data.fname} {data.lname}</h4>
+           
+              
             </div>
             <div className="member-img">
               <a href="patient-invoice.html">
-                <img src="../assets/images/sm/avatar2.jpg" className="rounded-circle" alt="profile-image" />
+              <img
+                        src={`http://localhost/hospital/image/${data.image}`}
+                       
+                      />
               </a>
             </div>
             <div className="body">
@@ -120,15 +152,20 @@ function Patient_profile () {
                 </ul>                            
               </div>
               <hr />
-              <strong>Occupation</strong>
-              <p>UI UX Design</p>
+              
               <strong>Email ID</strong>
-              <p>will.smith@info.com</p>
+              <p>{data.email}</p>
               <strong>Phone</strong>
-              <p>+123 456 789</p>
-              <hr />
-              <strong>Address</strong>
-              <address>85 Bay Drive, New Port Richey, FL 34653</address>
+              <p>{data.phone}</p>
+              <strong>DOB</strong>
+              <p>{data.date}</p>
+              <strong>Age</strong>
+              <p>{data.age}</p>
+              <strong>Gender</strong>
+              <p>{data.gender}</p>
+              
+            
+             
             </div>
           </div>
           <div className="card">
